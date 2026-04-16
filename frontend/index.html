@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeforestWatch - Global Deforestation Monitoring</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+    />
+
+    <!-- Chart.js CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <!-- LOADING INDICATOR -->
+    <div id="loadingIndicator" class="loading-spinner" style="display: none;"></div>
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-title">🌿 DeforestWatch</div>
+      <div class="live-clock" id="liveClock">00:00:00</div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="filter-group">
+          <label for="regionSelect">Region</label>
+          <select id="regionSelect">
+            <option value="">All Regions</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="startYear">Start Year</label>
+          <input
+            type="number"
+            id="startYear"
+            min="2010"
+            max="2024"
+            value="2010"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label for="endYear">End Year</label>
+          <input
+            type="number"
+            id="endYear"
+            min="2010"
+            max="2024"
+            value="2024"
+          />
+        </div>
+
+        <div class="button-group">
+          <button id="applyButton">Apply Filters</button>
+          <button id="resetButton" class="secondary">Reset</button>
+        </div>
+      </div>
+
+      <!-- KPI ROW -->
+      <div class="kpi-row">
+        <div class="kpi-card trending-up" id="kpiForestCover">
+          <div class="kpi-label">Average Forest Cover</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-unit">%</div>
+        </div>
+
+        <div class="kpi-card" id="kpiAnnualLoss">
+          <div class="kpi-label">Total Annual Loss</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-unit">Million hectares</div>
+        </div>
+
+        <div class="kpi-card trending-down" id="kpiCritical">
+          <div class="kpi-label">Critical + High Risk</div>
+          <div class="kpi-value">0</div>
+          <div class="kpi-unit">regions</div>
+        </div>
+
+        <div class="kpi-card neutral" id="kpiTrend">
+          <div class="kpi-label">Global Trend</div>
+          <div class="kpi-value">--</div>
+          <div class="kpi-unit">status</div>
+        </div>
+      </div>
+
+      <!-- TREND CHART SECTION -->
+      <h2 class="section-title">Forest Cover Trends</h2>
+      <div class="chart-container">
+        <canvas id="trendChart" style="max-height: 400px"></canvas>
+      </div>
+
+      <!-- MAP SECTION -->
+      <h2 class="section-title">Deforestation Hotspots Map</h2>
+      <div id="map" style="height: 420px"></div>
+
+      <!-- IMAGES ROW -->
+      <h2 class="section-title">Detailed Analysis Charts</h2>
+      <div class="images-row">
+        <div class="image-container">
+          <img id="hotspotChartImg" alt="Hotspot Chart" />
+        </div>
+        <div class="image-container">
+          <img id="heatmapImg" alt="Heatmap" />
+        </div>
+      </div>
+
+      <!-- REPORT SECTION -->
+      <h2 class="section-title">Comprehensive Report</h2>
+      <div class="report-section">
+        <div class="report-summary"></div>
+
+        <div class="recommendations">
+          <h4>Key Recommendations</h4>
+          <ol></ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
