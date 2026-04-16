@@ -1,4 +1,13 @@
-const API_BASE = "http://localhost:8000/api";
+// Auto-detect API URL based on environment
+const API_BASE = (function() {
+  // For localhost development
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return "http://localhost:8000/api";
+  }
+  // For production - can be set via window.DEFOREST_API_URL
+  return window.DEFOREST_API_URL || "https://deforest-watch-api.railway.app/api";
+})();
+
 const apiCache = new Map();
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 

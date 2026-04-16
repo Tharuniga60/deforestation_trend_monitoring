@@ -1,6 +1,10 @@
-# DeforestWatch API
+# DeforestWatch - Global Deforestation Monitoring Platform
 
-A FastAPI-based backend for monitoring and analyzing global deforestation trends.
+A full-stack application for monitoring and analyzing global deforestation trends with interactive visualizations and real-time analytics.
+
+**Live Demo**: https://deforest-watch.vercel.app
+**API Documentation**: https://deforest-watch-api.railway.app/docs
+**Repository**: https://github.com/Tharuniga60/deforestation_trend_monitoring
 
 ## Project Structure
 
@@ -9,6 +13,8 @@ deforest-watch/
 ├── backend/
 │   ├── main.py                 # FastAPI application entry point
 │   ├── requirements.txt         # Python dependencies
+│   ├── Procfile                # Railway deployment configuration
+│   ├── runtime.txt             # Python version specification
 │   ├── data/
 │   │   ├── generate_data.py    # Script to generate sample forest data
 │   │   └── sample_forest_data.csv  # Generated dataset (700 rows)
@@ -20,27 +26,105 @@ deforest-watch/
 │   └── routes/
 │       ├── forest_data.py      # Forest cover data endpoints
 │       └── analysis.py         # Analysis and reporting endpoints
+├── frontend/
+│   ├── index.html              # Main dashboard HTML
+│   ├── vercel.json             # Vercel deployment configuration
+│   ├── css/
+│   │   └── styles.css          # Dark theme styling
+│   └── js/
+│       ├── api.js              # API client with caching
+│       ├── charts.js           # Chart rendering functions
+│       ├── map.js              # Leaflet map integration
+│       └── app.js              # Application initialization
+├── DEPLOYMENT.md               # Production deployment guide
 └── README.md
 ```
 
-## Setup
+## Setup & Running Locally
 
+### Backend
 1. Install dependencies:
 ```bash
-pip install -r backend/requirements.txt
+cd backend
+pip install -r requirements.txt
 ```
 
 2. Generate sample data:
 ```bash
-python backend/data/generate_data.py
+python data/generate_data.py
 ```
 
 3. Run the FastAPI server:
 ```bash
-python backend/main.py
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-The API will be available at `http://localhost:8000`
+Backend available at: `http://localhost:8000`
+
+### Frontend
+1. Open in browser:
+```bash
+open frontend/index.html
+```
+
+Or run a local server:
+```bash
+cd frontend
+python -m http.server 3000
+```
+
+Frontend available at: `http://localhost:3000`
+
+## Production Deployment
+
+For complete deployment instructions to Railway (backend) and Vercel (frontend), see **[DEPLOYMENT.md](./DEPLOYMENT.md)**
+
+**Quick Summary:**
+- **Backend**: Deploy to Railway using GitHub integration (automatic Python detection)
+- **Frontend**: Deploy to Vercel using GitHub integration (static files)
+- **Cost**: FREE (using free tiers of Railway and Vercel)
+- **Time**: ~10 minutes end-to-end
+
+## Setup
+
+## Features
+
+### Dashboard
+- **Live Clock**: Real-time time display
+- **KPI Cards**: Forest cover %, annual loss, critical regions, global trend
+- **Interactive Map**: Leaflet-powered map with drag/zoom support
+  - Circle markers sized by deforestation loss
+  - Color-coded by risk level (Low/Medium/High/Critical)
+  - Popup information on hover/click
+- **Visualizations**:
+  - Trend charts (forest cover over time)
+  - Hotspot bar charts (top regions by loss)
+  - Heatmaps (annual loss percentage by year)
+- **Filtering**: Region and year range selection
+- **Report Section**: Summary statistics and actionable recommendations
+
+### Performance Optimizations
+- Server-side caching (5-minute TTL)
+- Client-side caching (5-minute TTL)
+- Parallel API requests
+- Debounced filter application (500ms)
+- Base64-encoded chart images (no extra HTTP requests)
+- Responsive design (mobile, tablet, desktop)
+
+### Technologies
+**Backend:**
+- FastAPI (Python web framework)
+- Pandas (data processing)
+- NumPy (numerical computing)
+- Matplotlib & Seaborn (visualizations)
+- Uvicorn (ASGI server)
+
+**Frontend:**
+- Vanilla JavaScript (no framework)
+- Chart.js (interactive charts)
+- Leaflet.js (interactive maps)
+- Google Fonts (Syne, DM Sans)
+- CSS Grid (responsive layout)
 
 ## API Endpoints
 
